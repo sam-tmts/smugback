@@ -7,7 +7,10 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Samuel Taylor" }]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "keyring>=25.7.0",
+    "oauthlib>=4.0.1",
+]
 
 [project.scripts]
 smugback = "smugback.cli:main"
