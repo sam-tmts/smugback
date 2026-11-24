@@ -107,5 +107,5 @@ cache inside the project, which this keeps working).
 |------|------|----|-------|
 | CR approved | 2026-11-24 | sam-tmts | Raised after Claude listed `~/Downloads` unasked |
 | Plan approved | 2026-11-24 | sam-tmts | Plan in the PR description |
-| PR merged | | | |
+| PR merged | 2026-11-24 | sam-tmts | PR #9. AC1 by M17, AC2 by M18 (fresh session), AC3 by M19, AC4 by M6 and M16 (M6's `~/.ssh` read stopped first by the permission rule), AC5 by the review and template-claude-project#15 |
 | Released | | | |
