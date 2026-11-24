@@ -9,6 +9,10 @@ heading and is tagged `vX.Y.Z`.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-24
+
+SmugBack's first release: sign in to SmugMug and list your albums.
+
 ### Added
 
 - The `smugback` command, with `--version` and `--help` (CR-0002).
@@ -23,4 +27,5 @@ heading and is tagged `vX.Y.Z`.
 
 - Coding agents' sandbox can no longer read the login Keychain (CR-0003).
 
-[Unreleased]: https://github.com/sam-tmts/smugback/commits/main
+[Unreleased]: https://github.com/sam-tmts/smugback/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/sam-tmts/smugback/releases/tag/v0.1.0
