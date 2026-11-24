@@ -19,9 +19,12 @@ dependencies as possible.
 - **uv** manages Python, packages and the virtual environment. `uv.lock` is committed
   and every check runs with `--locked`, so CI and every developer use the same
   versions.
+- **uv builds the package itself** (the `uv_build` backend, version-matched to uv), so
+  building downloads nothing that `uv.lock` doesn't cover.
 - **uv's cache is inside the project** (`.uv-cache/`, set in `pyproject.toml`). The
-  sandbox can't write to `~/.cache`, and a project cache can't be tampered with by one
-  project and reused by another, or by the owner's unsandboxed terminal.
+  sandbox can't write to `~/.cache`, and a sandboxed command can't tamper with the
+  shared cache that other projects use. The path is relative to the current folder, so
+  uv is run from the project root.
 - **pytest** for tests and **ruff** for lint and format, both dev-only.
 - **`make check`** is the one command that runs every check, locally and in CI.
 - **The standard library first:** argparse for the command line. A new library needs a
@@ -33,7 +36,9 @@ dependencies as possible.
 ## Consequences
 
 - One tool to install (uv) besides git and Claude Code; setup is fast.
-- uv must be run from the project root, because the cache path is relative.
+- This project's `.venv/` and `.uv-cache/` are writable from the sandbox and
+  git-ignored, so the owner's terminal shouldn't run SmugBack with real credentials
+  from them (see the threat model).
 - Each project downloads its own packages instead of sharing a cache: a little more
   disk and network, in exchange for isolation.
 - Make is assumed present; it is on macOS (with the command-line tools) and on CI.
@@ -48,4 +53,6 @@ dependencies as possible.
 - **A script or tox/nox instead of make:** make is more widely known and needs nothing
   installed.
 - **The shared uv cache, opened to the sandbox:** simpler, but lets a sandboxed command
-  affect what the owner's terminal and other projects install.
+  affect what other projects install.
+- **hatchling as build backend:** common, but downloaded unpinned on every build;
+  `uv_build` needs nothing extra.

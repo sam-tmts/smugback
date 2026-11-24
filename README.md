@@ -19,7 +19,6 @@ It only ever reads from your account.
 You need [uv](https://docs.astral.sh/uv/). From a clone of this repository:
 
 ```sh
-uv sync
 uv run smugback --help
 ```
 
@@ -53,12 +52,10 @@ SmugBack is built with coding agents, and every change follows a change request.
    limited to this repository, with a short expiry and only Contents (read and write).
    Push once from an ordinary terminal and paste the token when asked for a password;
    git stores it for later pushes, including Claude's.
-4. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/)**, then run
-   `uv python install 3.12` in an ordinary terminal. The sandbox can reach PyPI but not
-   uv's Python downloads.
-5. **Clone over HTTPS**, start `claude` in the folder, and run `/sandbox` to confirm
-   the sandbox is on. Run uv from the project root: its cache lives in `.uv-cache/`
-   there.
+4. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/)**.
+5. **Clone over HTTPS**, and in an ordinary terminal run `uv python install` in the
+   folder: the sandbox can reach PyPI but not uv's Python downloads. Then start
+   `claude` there, and run `/sandbox` to confirm the sandbox is on.
 
 ### Repository settings
 

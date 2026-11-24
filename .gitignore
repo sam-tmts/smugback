@@ -24,8 +24,9 @@ desktop.ini
 *.tmp
 tmp/
 
-# Python and uv (the uv cache is kept in the project; see pyproject.toml)
+# Python and uv
 .venv/
+dist/
 .uv-cache/
 __pycache__/
 .pytest_cache/

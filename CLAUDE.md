@@ -90,7 +90,7 @@ a PR with passing CI, and is merged by the owner. If in doubt, it isn't trivial.
 
 ## Commands
 
-Run from the project root.
+Run from the project root (uv's cache path is relative: see ADR-0005).
 
 - Every check (tests, lint, format check): `make check`
 - Format: `uv run ruff format`
@@ -101,6 +101,3 @@ Run from the project root.
 - **Read-only on SmugMug.** SmugBack never uploads, edits or deletes anything there.
 - **No SmugMug hosts in the sandbox.** Real runs happen in the owner's own terminal;
   tests use recorded fixtures.
-- **uv's cache is in `.uv-cache/`**, set in `pyproject.toml` because the sandbox
-  can't write to `~/.cache`. The path is relative to the current folder, so run uv
-  from the project root.

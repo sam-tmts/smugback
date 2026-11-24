@@ -15,7 +15,8 @@ below is a development, build or CI tool. The toolchain choice is ADR-0005.
 - **Purpose:** installs Python and packages, manages the virtual environment and
   lockfile.
 - **Pinned in:** `uv.lock` records the packages; CI pins uv itself in
-  `.github/workflows/ci.yml` (`version` input). Developers install it themselves.
+  `.github/workflows/ci.yml` (`version` input), which Dependabot doesn't update, so it
+  is bumped by hand. Developers install uv themselves.
 - **Alternatives:** pip and venv; Poetry (see ADR-0005).
 - **Licence:** MIT or Apache-2.0. **Health:** Astral; very active, widely adopted.
 
@@ -23,7 +24,7 @@ below is a development, build or CI tool. The toolchain choice is ADR-0005.
 
 - **Purpose:** runs the tests (dev only).
 - **Pinned in:** `uv.lock`, with its own dependencies `iniconfig`, `packaging`,
-  `pluggy` and `pygments`.
+  `pluggy`, `pygments` and, on Windows only, `colorama`.
 - **Alternatives:** `unittest` in the standard library (more boilerplate, weaker
   failure output).
 - **Licence:** MIT. **Health:** the standard Python test runner; active.
@@ -35,13 +36,13 @@ below is a development, build or CI tool. The toolchain choice is ADR-0005.
 - **Alternatives:** flake8, isort and black together (three tools for one job).
 - **Licence:** MIT. **Health:** Astral; very active, widely adopted.
 
-## hatchling
+## `uv_build`
 
 - **Purpose:** build backend that turns the source into an installable package.
-- **Pinned in:** `[build-system]` in `pyproject.toml` (unpinned; fetched by uv when it
-  builds the package).
-- **Alternatives:** setuptools (older, more configuration); `uv_build`.
-- **Licence:** MIT. **Health:** maintained by the PyPA Hatch project; active.
+- **Pinned in:** `[build-system]` in `pyproject.toml`, to the same minor version as uv,
+  which then builds with its own copy and downloads nothing.
+- **Alternatives:** hatchling or setuptools (separate downloads, unpinned by the lock).
+- **Licence:** MIT or Apache-2.0. **Health:** part of uv; very active.
 
 ## `astral-sh/setup-uv`
 

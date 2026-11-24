@@ -18,9 +18,6 @@ flowchart LR
     smugback -- writes backups --> disk[(Local folder)]
 ```
 
-SmugMug sign-in and album listing arrive in CR-0003; today the command only reports its
-version and help.
-
 ## Containers
 
 One container: the `smugback` Python package (`src/smugback/`), run as a command. Its

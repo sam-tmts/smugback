@@ -19,13 +19,11 @@ dev = [
 ]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.13.9,<0.14"]
+build-backend = "uv_build"
 
 [tool.uv]
-# Inside the project: the sandbox can write here, and a sandboxed command can't
-# tamper with a cache that the owner's unsandboxed terminal shares.
-cache-dir = ".uv-cache"
+cache-dir = ".uv-cache"  # see ADR-0005
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
