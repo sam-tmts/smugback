@@ -9,12 +9,20 @@
     ],
     "filesystem": {
       "denyRead": [
+        "~/",
         "~/.ssh",
         "~/.aws",
         "~/.config/gh",
         "~/.git-credentials",
         "~/.netrc",
         "~/Library/Keychains"
+      ],
+      "allowRead": [
+        ".",
+        "~/.local/bin/uv",
+        "~/.local/share/uv/python",
+        "~/.gitconfig",
+        "~/.config/git"
       ]
     },
     "network": {

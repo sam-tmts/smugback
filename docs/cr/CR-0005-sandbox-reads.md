@@ -106,6 +106,6 @@ cache inside the project, which this keeps working).
 | Gate | Date | By | Notes |
 |------|------|----|-------|
 | CR approved | 2026-11-24 | sam-tmts | Raised after Claude listed `~/Downloads` unasked |
-| Plan approved | | | |
+| Plan approved | 2026-11-24 | sam-tmts | Plan in the PR description |
 | PR merged | | | |
 | Released | | | |
