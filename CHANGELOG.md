@@ -11,8 +11,8 @@ heading and is tagged `vX.Y.Z`.
 
 ### Security
 
-- Coding agents' sandbox can no longer read your home folder outside this project, so
-  work on SmugBack can't see your other projects (CR-0005).
+- Shell commands Claude runs for SmugBack can no longer read your home folder outside
+  this project (CR-0005).
 
 ## [0.1.0] - 2026-11-24
 
