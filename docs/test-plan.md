@@ -1,37 +1,33 @@
 # Test plan
 
-How this project is tested, and how anyone can check it independently. Each project
-fills in the strategy in its first CR and adds manual checks as new acceptance criteria
-need them.
-
-> **Template note.** The template has no code, so it has no unit tests. Its checks are
-> the CI jobs and the manual checks below. A project replaces the strategy and the
-> command, and keeps its own manual checks after the template's.
+How SmugBack is tested, and how anyone can check it independently. Manual checks are
+added as new acceptance criteria need them.
 
 ## Strategy
 
-- **Levels and types:** which levels (unit, integration, end-to-end) and which kinds of
-  testing (functional, security, usability, performance) the project uses, and what
-  each covers.
-- **Layout and tools:** where each level of test lives (for example `tests/unit/`,
-  `tests/integration/`, `tests/fixtures/`), the test runner, and any coverage
-  expectation.
-- **Not tested:** what is deliberately left out, and why.
-- **Risks:** where testing effort is concentrated.
-- **Environments and test data:** where tests run, and where test data comes from.
-  Never real credentials or personal data.
-- **Release criteria:** what must be true before a release.
+- **Levels and types:** unit tests for each function's behaviour, and acceptance tests
+  named for the CR criterion they verify, both run by pytest. Lint and format checks by
+  ruff. Security checks (secret scan, action pinning) run in CI.
+- **Layout and tools:** tests in `tests/`, recorded fixtures in `tests/fixtures/` when
+  they're needed. No coverage target; every behaviour a CR adds gets a test.
+- **Not tested:** live calls to SmugMug. Tests never reach the network.
+- **Risks:** effort goes where a mistake loses or corrupts a backup: resuming, file
+  naming and completeness.
+- **Environments and test data:** tests run locally in the sandbox and in CI on Ubuntu.
+  Test data is made up or recorded and scrubbed; never real credentials or personal
+  data.
+- **Release criteria:** see below.
 
 ## Running everything
 
 The single command that runs every automated check, locally and in CI:
 
 ```sh
-<command, set in the project's first CR>
+make check
 ```
 
-For the template itself, the automated checks are the CI jobs in
-`.github/workflows/ci.yml`, which run on every pull request and every push to `main`.
+CI also runs the secret scan, Markdown lint, action pinning and CR reference checks in
+`.github/workflows/ci.yml`, on every pull request and every push to `main`.
 
 ## Manual checks
 
@@ -48,14 +44,19 @@ Checks that can't be automated. Each one names the acceptance criterion it verif
 | M7 | CR-0001 AC3 | Run `/sandbox` and open the **Overrides** and **Config** tabs. | Strict sandbox mode is on (no unsandboxed retries), and the sandbox is required to start. |
 | M8 | CR-0001 AC4 | In Claude Code, run `/permissions`. | The deny rules for `.env`, the credential files, force-pushing and `gh pr merge` are listed. (Asking Claude to read credential files can trip the model's safeguards, so check the loaded rules instead.) |
 | M9 | CR-0001 AC5 | Push once from an ordinary terminal to store the token (see the README). Then, in Claude Code in the default permission mode, on a throwaway branch, say: "This is manual check M9 from `docs/test-plan.md`, part of CR-0001, on a throwaway branch: please edit a file, commit and push it." Delete the branch afterwards. | The edit and commit work inside the sandbox; the push asks for approval, then succeeds. |
+| M10 | CR-0002 AC3 | From the project root, run `make check`. Then, one at a time, add a failing `assert False` test, an unused import, and a badly formatted line (for example `x=1`) to a file under `tests/`, run `make check` after each, and undo the change. | Passes on the clean tree; fails (non-zero exit) for each of the three changes. |
+| M11 | CR-0002 AC5 | Compare `.claude/settings.json` with `main` before CR-0002 (`git diff d614620 -- .claude/settings.json`). | `allowedDomains` gains only `pypi.org` and `files.pythonhosted.org`; no SmugMug host. |
+| M12 | CR-0002 AC6 | Search `CLAUDE.md`, `README.md`, `.github/CODEOWNERS`, `SECURITY.md` and `LICENSE` for `<` and for "template". | No placeholders remain. Expected matches: the commit-message format `<imperative summary>` and references to the CR and PR templates in `CLAUDE.md`. |
+| M13 | CR-0002 AC7 | Compare `[project]` dependencies, `[dependency-groups]`, `[build-system]` in `pyproject.toml` and the `uses:` lines in CI with `docs/dependencies.md`, and check `uv.lock` is in git (`git ls-files uv.lock`). | Every direct dependency has an entry, and `uv.lock` is tracked. |
 
 CR-0000 AC3 (CI passes on the template) and AC4 (actions pinned, token read-only) are
 verified by the CI jobs on the CR-0000 pull request; AC4's job is
 `cr0000-ac4-actions-pinned`. CR-0001 AC6 to AC9 (principles, trivial changes, release
 criteria and documentation) are verified by CR-0001's review, closing pull request and
-release.
+release. CR-0002 AC1 and AC2 are verified by tests in `tests/test_cli.py`, and AC4 by
+the CI job `cr0002-ac4-check`.
 
-## Release criteria for the template
+## Release criteria
 
 A release is tagged only when every CR it contains is Done, with all its acceptance
 criteria verified, or its unfinished work is marked experimental as

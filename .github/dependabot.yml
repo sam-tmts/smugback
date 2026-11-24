@@ -1,8 +1,11 @@
-# Proposes updates for pinned GitHub Actions. Projects add their own package ecosystems
-# (for example pip or npm) in their first CR.
+# Proposes updates for pinned GitHub Actions and the Python packages in uv.lock.
 version: 2
 updates:
   - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: uv
     directory: /
     schedule:
       interval: weekly

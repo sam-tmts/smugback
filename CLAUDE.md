@@ -2,7 +2,8 @@
 
 Read this first, every session.
 
-**Project:** <name>. <One-line description.>
+**Project:** SmugBack. A command-line tool that backs up a SmugMug account's photos
+and videos to a local folder, reading only.
 **Owner:** sam-tmts. The owner approves every gate below; you never skip one.
 
 ## Principles
@@ -14,7 +15,7 @@ In priority order: when two conflict, the higher one wins.
    without losing what matters, remove it. Fix problems the simplest way, and prefer
    removing complexity to adding it.
 2. **Easy to use, fun to use.** Always ask what will be easiest and most enjoyable for
-   the user: the people using what we build, developers using this template, and the
+   the user: the people using what we build, developers working on it, and the
    owner working through its gates. Fewer features that work obviously beat more that
    need explaining.
 3. **Security in proportion to risk.** Build with security in mind at all times.
@@ -89,13 +90,14 @@ a PR with passing CI, and is merged by the owner. If in doubt, it isn't trivial.
 
 ## Commands
 
-<Filled in by each project's first CR, for example:>
+Run from the project root (uv's cache path is relative: see ADR-0005).
 
-- Test: `<command>`
-- Lint/format: `<command>`
-- Build: `<command>`
-- Run locally (owner only when real credentials are involved): `<command>`
+- Every check (tests, lint, format check): `make check`
+- Format: `uv run ruff format`
+- Run: `uv run smugback` (owner only, in their own terminal, when it reaches SmugMug)
 
 ## Project notes
 
-<Anything specific to this project an agent must know.>
+- **Read-only on SmugMug.** SmugBack never uploads, edits or deletes anything there.
+- **No SmugMug hosts in the sandbox.** Real runs happen in the owner's own terminal;
+  tests use recorded fixtures.

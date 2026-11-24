@@ -24,4 +24,10 @@ desktop.ini
 *.tmp
 tmp/
 
-# Language-specific entries are added by each project's first CR
+# Python and uv
+.venv/
+dist/
+.uv-cache/
+__pycache__/
+.pytest_cache/
+.ruff_cache/

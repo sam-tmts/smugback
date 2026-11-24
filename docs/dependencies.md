@@ -7,8 +7,49 @@ reviewed. Exact versions are pinned in the files named, not here.
 Each entry records: **purpose**, **where it's pinned**, **alternatives considered**,
 **licence** and **maintenance health**.
 
-> **Template note.** These are the template's own dependencies, all used in CI. Each
-> project adds its toolchain and libraries in its first CR and later CRs.
+SmugBack has no runtime dependencies yet: it uses only the standard library. Every entry
+below is a development, build or CI tool. The toolchain choice is ADR-0005.
+
+## uv
+
+- **Purpose:** installs Python and packages, manages the virtual environment and
+  lockfile.
+- **Pinned in:** `uv.lock` records the packages; CI pins uv itself in
+  `.github/workflows/ci.yml` (`version` input), which Dependabot doesn't update, so it
+  is bumped by hand. Developers install uv themselves.
+- **Alternatives:** pip and venv; Poetry (see ADR-0005).
+- **Licence:** MIT or Apache-2.0. **Health:** Astral; very active, widely adopted.
+
+## pytest
+
+- **Purpose:** runs the tests (dev only).
+- **Pinned in:** `uv.lock`, with its own dependencies `iniconfig`, `packaging`,
+  `pluggy`, `pygments` and, on Windows only, `colorama`.
+- **Alternatives:** `unittest` in the standard library (more boilerplate, weaker
+  failure output).
+- **Licence:** MIT. **Health:** the standard Python test runner; active.
+
+## ruff
+
+- **Purpose:** lint and format checks (dev only).
+- **Pinned in:** `uv.lock`.
+- **Alternatives:** flake8, isort and black together (three tools for one job).
+- **Licence:** MIT. **Health:** Astral; very active, widely adopted.
+
+## `uv_build`
+
+- **Purpose:** build backend that turns the source into an installable package.
+- **Pinned in:** `[build-system]` in `pyproject.toml`, to the same minor version as uv,
+  which then builds with its own copy and downloads nothing.
+- **Alternatives:** hatchling or setuptools (separate downloads, unpinned by the lock).
+- **Licence:** MIT or Apache-2.0. **Health:** part of uv; very active.
+
+## `astral-sh/setup-uv`
+
+- **Purpose:** installs uv in CI.
+- **Pinned in:** `.github/workflows/ci.yml` (full commit SHA, tag in a comment).
+- **Alternatives:** installing uv with a `curl` script step (no pinning by SHA).
+- **Licence:** MIT. **Health:** Astral's official action; active.
 
 ## gitleaks
 
