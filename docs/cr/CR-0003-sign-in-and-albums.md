@@ -42,6 +42,11 @@ It also closes the risks CR-0002 left open before SmugBack handles credentials.
   closes the residual risk recorded in CR-0002.
 - A convention in `CLAUDE.md`: refer to future work by its GitHub issue, never by an
   unwritten CR number.
+- *(Amendment)* Block the sandbox from the owner's login Keychain: `~/Library/Keychains`
+  added to the sandbox's `denyRead`, and a matching `Read(~/Library/Keychains/**)`
+  permission deny for Claude's file tools. Planning found sandboxed commands can search
+  the login Keychain; Keychain items are readable without a prompt by the Python
+  interpreter that created them, which the project's `.venv` shares.
 
 **Out:**
 
@@ -111,9 +116,14 @@ ADR-0005 (Python toolchain).
 - [ ] AC10: When no secure credential store is available, `smugback login` exits
   non-zero with a clear message and writes no credentials anywhere.
   *Verified by:* `test_cr0003_ac10_login_without_secure_store_stores_nothing`.
+- [ ] AC11: A sandboxed command can't read a Keychain item that the owner's own
+  terminal can read.
+  *Verified by:* manual check in `docs/test-plan.md`.
 
 ## Constraints and risks
 
+- **Protected path:** `.claude/settings.json`, for the Keychain deny rules only. This
+  CR covers it.
 - **Real credentials:** the agent never sees, requests or stores them (ADR-0003).
   Only the owner runs `login`, in their own terminal.
 - **New dependencies:** each needs the owner's approval and an entry in
@@ -130,6 +140,7 @@ ADR-0005 (Python toolchain).
 | Gate | Date | By | Notes |
 |------|------|----|-------|
 | CR approved | 2026-11-24 | sam-tmts | Keychain only; headless use deferred |
-| Plan approved | | | |
+| CR amended | 2026-11-24 | sam-tmts | Keychain deny rule and AC11 added after planning found the sandbox can reach the login Keychain |
+| Plan approved | 2026-11-24 | sam-tmts | Plan in the PR description |
 | PR merged | | | |
 | Released | | | |
