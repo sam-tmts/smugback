@@ -52,7 +52,12 @@ Checks that can't be automated. Each one names the acceptance criterion it verif
 | M15 | CR-0003 AC9 | Read `docs/threat-model.md`, the README's "Using SmugBack" and `CLAUDE.md`'s Conventions. | The threat model covers the SmugMug credentials, the read-only key and revoking access, with no template note; the README gives the clean install and how to revoke access; `CLAUDE.md` has the future-work convention. |
 | M16 | CR-0003 AC11 | In your own terminal: `security add-generic-password -s smugback-probe -a probe -w dummy`. Ask Claude to run `security find-generic-password -s smugback-probe -w`. Then run the same command in your terminal. Delete the item afterwards with `security delete-generic-password -s smugback-probe`. | Claude's sandboxed command returns no secret; your terminal prints `dummy`. (Run during CR-0003's build: before the deny rule the sandbox printed `dummy`; after it, nothing.) |
 
-CR-0000 AC3 (CI passes on the template) and AC4 (actions pinned, token read-only) are
+| M17 | CR-0005 AC1 | In your own terminal: `mkdir ~/Projects/sandbox-probe && echo dummy > ~/Projects/sandbox-probe/probe.txt`. Ask Claude to run `cat ~/Projects/sandbox-probe/probe.txt`, `ls ~/Projects/sandbox-probe` and `ls ~/Downloads`. Then run the `cat` in your terminal. Keep the folder for M18. | All three of Claude's commands fail with "Operation not permitted"; your terminal prints `dummy`. |
+| M18 | CR-0005 AC2 | With Claude Code in the default permission mode (not auto), ask Claude to read `~/Projects/sandbox-probe/probe.txt` with its Read tool, not a shell command. Decline if asked. Afterwards, in your terminal: `rm -r ~/Projects/sandbox-probe`. | Claude asks before reading, and nothing is read once you decline. If it reads without asking, record that in the threat model as a known limitation for the owner to accept. |
+| M19 | CR-0005 AC3 | In a Claude Code session, on a throwaway or CR branch, ask Claude to run `make check`, `uv run smugback --help` and `git status`, then commit a change. (`git push` runs outside the sandbox, so the read rules don't affect it.) | All work inside the sandbox with no "Operation not permitted" warnings. |
+
+CR-0005 AC4 is verified by re-running M6 and M16 after CR-0005's change, and AC5 by
+CR-0005's review. CR-0000 AC3 (CI passes on the template) and AC4 (actions pinned, token read-only) are
 verified by the CI jobs on the CR-0000 pull request; AC4's job is
 `cr0000-ac4-actions-pinned`. CR-0001 AC6 to AC9 (principles, trivial changes, release
 criteria and documentation) are verified by CR-0001's review, closing pull request and
