@@ -3,8 +3,8 @@
 A command-line tool that backs up a SmugMug account's photos and videos to a folder on
 your computer.
 
-> **Status:** early. The `smugback` command installs and runs, but can't back anything
-> up yet. Signing in to SmugMug and listing albums come next.
+> **Status:** early. SmugBack can sign in to SmugMug and list your albums, but can't
+> back anything up yet.
 
 ## Scope
 
@@ -14,13 +14,29 @@ album structure, and pick up where it left off if a backup is interrupted.
 **SmugBack doesn't:** upload, edit or delete anything on SmugMug, or sync changes back.
 It only ever reads from your account.
 
-## Quick start
+## Using SmugBack
 
-You need [uv](https://docs.astral.sh/uv/). From a clone of this repository:
+You need macOS, [uv](https://docs.astral.sh/uv/), and an API key from SmugMug (a
+read-only key is enough: SmugBack only reads).
 
-```sh
-uv run smugback --help
-```
+1. **Install** a reviewed version, outside any working copy of the code:
+
+   ```sh
+   uv tool install git+https://github.com/sam-tmts/smugback@<tag or commit>
+   ```
+
+   Don't run SmugBack with real credentials from a development checkout: coding agents
+   can write to its `.venv/` (see the [threat model](docs/threat-model.md)).
+2. **Sign in:** `smugback login` asks for your API key and secret, opens SmugMug in your
+   browser, and asks for the six-digit code SmugMug shows. Your credentials are stored
+   only in the macOS Keychain. macOS may ask whether to allow access to the Keychain,
+   now and again after SmugBack's Python is upgraded; that's expected.
+3. **List your albums:** `smugback albums`.
+4. **Sign out:** `smugback logout` removes SmugBack's credentials from the Keychain.
+
+SmugMug's access tokens don't expire. To cut SmugBack off completely (for example if
+you think a token was exposed), revoke its access in SmugMug's **Account Settings**,
+then run `smugback login` again if you still want to use it.
 
 ## Working on SmugBack
 
@@ -39,6 +55,8 @@ SmugBack is built with coding agents, and every change follows a change request.
   ([ADR-0004](docs/adr/ADR-0004-sandboxed-development.md)).
 - **Python with uv, pytest and ruff**
   ([ADR-0005](docs/adr/ADR-0005-python-toolchain.md)).
+- **A read-only SmugMug client**
+  ([ADR-0006](docs/adr/ADR-0006-read-only-smugmug-client.md)).
 
 ### One-time setup on your computer
 

@@ -7,8 +7,29 @@ reviewed. Exact versions are pinned in the files named, not here.
 Each entry records: **purpose**, **where it's pinned**, **alternatives considered**,
 **licence** and **maintenance health**.
 
-SmugBack has no runtime dependencies yet: it uses only the standard library. Every entry
-below is a development, build or CI tool. The toolchain choice is ADR-0005.
+SmugBack's runtime dependencies are `keyring` and `oauthlib`; every other entry is a
+development, build or CI tool. The toolchain choice is ADR-0005.
+
+## keyring
+
+- **Purpose:** reads and writes SmugBack's credentials in the OS credential store
+  (ADR-0003).
+- **Pinned in:** `uv.lock`, with its own dependencies on macOS: `jaraco.classes`,
+  `jaraco.context`, `jaraco.functools` and `more-itertools` (and, on other platforms
+  only, `SecretStorage`, `jeepney` or `pywin32-ctypes`).
+- **Alternatives:** calling macOS's `security` command directly (macOS only, and
+  secrets on command lines).
+- **Licence:** MIT. **Health:** the standard Python credential-store library, from the
+  jaraco project; active.
+
+## oauthlib
+
+- **Purpose:** signs SmugMug API requests with OAuth 1.0a (ADR-0006).
+- **Pinned in:** `uv.lock`; no dependencies of its own.
+- **Alternatives:** `requests-oauthlib` (adds `requests` and its dependencies); our own
+  signing code (security-sensitive).
+- **Licence:** BSD-3-Clause. **Health:** widely used (underneath `requests-oauthlib`);
+  active.
 
 ## uv
 

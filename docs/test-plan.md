@@ -48,13 +48,17 @@ Checks that can't be automated. Each one names the acceptance criterion it verif
 | M11 | CR-0002 AC5 | Compare `.claude/settings.json` with `main` before CR-0002 (`git diff d614620 -- .claude/settings.json`). | `allowedDomains` gains only `pypi.org` and `files.pythonhosted.org`; no SmugMug host. |
 | M12 | CR-0002 AC6 | Search `CLAUDE.md`, `README.md`, `.github/CODEOWNERS`, `SECURITY.md` and `LICENSE` for `<` and for "template". | No placeholders remain. Expected matches: the commit-message format `<imperative summary>` and references to the CR and PR templates in `CLAUDE.md`. |
 | M13 | CR-0002 AC7 | Compare `[project]` dependencies, `[dependency-groups]`, `[build-system]` in `pyproject.toml` and the `uses:` lines in CI with `docs/dependencies.md`, and check `uv.lock` is in git (`git ls-files uv.lock`). | Every direct dependency has an entry, and `uv.lock` is tracked. |
+| M14 | CR-0003 AC8 | In your own terminal (not through Claude), install SmugBack from the PR's commit as the README describes. Run `smugback login`, then `smugback albums`, and compare the list with your albums on the SmugMug website. Note where in SmugMug's Account Settings SmugBack's access is listed. Run `smugback logout`, then search Keychain Access for "smugback". Finally `uv tool uninstall smugback`. | Login succeeds; every album appears with a plausible count; SmugBack is listed in Account Settings (record the exact place so the README can name it); after logout, Keychain Access has no "smugback" item. |
+| M15 | CR-0003 AC9 | Read `docs/threat-model.md`, the README's "Using SmugBack" and `CLAUDE.md`'s Conventions. | The threat model covers the SmugMug credentials, the read-only key and revoking access, with no template note; the README gives the clean install and how to revoke access; `CLAUDE.md` has the future-work convention. |
+| M16 | CR-0003 AC11 | In your own terminal: `security add-generic-password -s smugback-probe -a probe -w dummy`. Ask Claude to run `security find-generic-password -s smugback-probe -w`. Then run the same command in your terminal. Delete the item afterwards with `security delete-generic-password -s smugback-probe`. | Claude's sandboxed command returns no secret; your terminal prints `dummy`. (Run during CR-0003's build: before the deny rule the sandbox printed `dummy`; after it, nothing.) |
 
 CR-0000 AC3 (CI passes on the template) and AC4 (actions pinned, token read-only) are
 verified by the CI jobs on the CR-0000 pull request; AC4's job is
 `cr0000-ac4-actions-pinned`. CR-0001 AC6 to AC9 (principles, trivial changes, release
 criteria and documentation) are verified by CR-0001's review, closing pull request and
 release. CR-0002 AC1 and AC2 are verified by tests in `tests/test_cli.py`, and AC4 by
-the CI job `cr0002-ac4-check`.
+the CI job `cr0002-ac4-check`. CR-0003 AC1–AC7 and AC10 are verified by tests in
+`tests/test_smugmug_cli.py`.
 
 ## Release criteria
 
