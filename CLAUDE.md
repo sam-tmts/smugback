@@ -2,7 +2,8 @@
 
 Read this first, every session.
 
-**Project:** <name>. <One-line description.>
+**Project:** SmugBack. A command-line tool that backs up a SmugMug account's photos
+and videos to a local folder, reading only.
 **Owner:** sam-tmts. The owner approves every gate below; you never skip one.
 
 ## Principles
@@ -89,13 +90,17 @@ a PR with passing CI, and is merged by the owner. If in doubt, it isn't trivial.
 
 ## Commands
 
-<Filled in by each project's first CR, for example:>
+Run from the project root.
 
-- Test: `<command>`
-- Lint/format: `<command>`
-- Build: `<command>`
-- Run locally (owner only when real credentials are involved): `<command>`
+- Every check (tests, lint, format check): `make check`
+- Format: `uv run ruff format`
+- Run: `uv run smugback` (owner only, in their own terminal, when it reaches SmugMug)
 
 ## Project notes
 
-<Anything specific to this project an agent must know.>
+- **Read-only on SmugMug.** SmugBack never uploads, edits or deletes anything there.
+- **No SmugMug hosts in the sandbox.** Real runs happen in the owner's own terminal;
+  tests use recorded fixtures.
+- **uv's cache is in `.uv-cache/`**, set in `pyproject.toml` because the sandbox
+  can't write to `~/.cache`. The path is relative to the current folder, so run uv
+  from the project root.
