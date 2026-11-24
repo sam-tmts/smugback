@@ -15,7 +15,7 @@ In priority order: when two conflict, the higher one wins.
    without losing what matters, remove it. Fix problems the simplest way, and prefer
    removing complexity to adding it.
 2. **Easy to use, fun to use.** Always ask what will be easiest and most enjoyable for
-   the user: the people using what we build, developers using this template, and the
+   the user: the people using what we build, developers working on it, and the
    owner working through its gates. Fewer features that work obviously beat more that
    need explaining.
 3. **Security in proportion to risk.** Build with security in mind at all times.
