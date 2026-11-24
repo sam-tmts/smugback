@@ -43,7 +43,7 @@ SmugBack as below.
 4. **Sign out:** `smugback logout` removes SmugBack's credentials from the Keychain.
 
 SmugMug's access tokens don't expire. To cut SmugBack off completely (for example if
-you think a token was exposed), revoke its access in SmugMug's **Account Settings**,
+you think a token was exposed), revoke its access in SmugMug under **Site Settings → API Keys**,
 then run `smugback login` again if you still want to use it.
 
 ## Working on SmugBack
