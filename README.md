@@ -19,6 +19,13 @@ It only ever reads from your account.
 You need macOS, [uv](https://docs.astral.sh/uv/), and an API key from SmugMug (a
 read-only key is enough: SmugBack only reads).
 
+**Use your everyday macOS account, not the developer account** you work on SmugBack
+in. Your SmugMug credentials, and later your backups, are personal data, which the
+developer account is meant never to hold
+([ADR-0004](docs/adr/ADR-0004-sandboxed-development.md)). That account then has no
+route to them at all. You don't need a copy of the code there: install uv, then
+SmugBack as below.
+
 1. **Install** a reviewed version, outside any working copy of the code:
 
    ```sh
@@ -28,8 +35,6 @@ read-only key is enough: SmugBack only reads).
    Use the date the tag or commit was reviewed: `uv tool install` doesn't use the
    project's lockfile, and this stops it picking up packages released since.
 
-   Don't run SmugBack with real credentials from a development checkout: coding agents
-   can write to its `.venv/` (see the [threat model](docs/threat-model.md)).
 2. **Sign in:** `smugback login` asks for your API key and secret, opens SmugMug in your
    browser, and asks for the six-digit code SmugMug shows. Your credentials are stored
    only in the macOS Keychain. macOS may ask whether to allow access to the Keychain,
