@@ -75,7 +75,7 @@ cache inside the project, which this keeps working).
   *Verified by:* manual check in `docs/test-plan.md` (the owner creates a dummy file
   in another project folder in their own terminal; Claude's sandboxed `cat` and `ls`
   of it fail with a sandbox denial, while the owner's terminal reads it).
-- [ ] AC2: Claude's file tools can't read a file in another project folder without the
+- [x] AC2: Claude's file tools can't read a file in another project folder without the
   owner's approval, or, if no simple rule achieves that, the threat model records it
   as a known limitation the owner has accepted.
   *Verified by:* manual check in `docs/test-plan.md`.
