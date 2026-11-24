@@ -20,5 +20,17 @@ flowchart LR
 
 ## Containers
 
-One container: the `smugback` Python package (`src/smugback/`), run as a command. Its
-entry point is `smugback.cli:main`. There is no server or database.
+One container: the `smugback` Python package (`src/smugback/`), run as a command. There
+is no server or database. Inside it:
+
+- `cli.py`: the `login`, `logout` and `albums` commands (entry point
+  `smugback.cli:main`).
+- `smugmug.py`: OAuth 1.0a sign-in and the read-only API client (ADR-0006).
+- `credentials.py`: reads and writes the one Keychain item that holds the credentials
+  (ADR-0003).
+
+```mermaid
+flowchart LR
+    cli[cli.py] --> sm[smugmug.py] -- signed GET over HTTPS --> api[(SmugMug API)]
+    cli --> cred[credentials.py] -- keyring --> kc[(macOS Keychain)]
+```

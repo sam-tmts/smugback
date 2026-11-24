@@ -1,0 +1,17 @@
+{
+  "Response": {
+    "Uri": "/api/v2/user/demo!albums",
+    "Album": [
+      {"Name": "Garden Videos", "ImageCount": 340},
+      {"Name": "Family Portraits", "ImageCount": 57}
+    ],
+    "Pages": {
+      "Total": 4,
+      "Start": 3,
+      "Count": 2,
+      "RequestedCount": 2
+    }
+  },
+  "Code": 200,
+  "Message": "Ok"
+}

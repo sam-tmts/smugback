@@ -13,7 +13,8 @@
         "~/.aws",
         "~/.config/gh",
         "~/.git-credentials",
-        "~/.netrc"
+        "~/.netrc",
+        "~/Library/Keychains"
       ]
     },
     "network": {
@@ -35,6 +36,7 @@
       "Read(~/.config/gh/**)",
       "Read(~/.git-credentials)",
       "Read(~/.netrc)",
+      "Read(~/Library/Keychains/**)",
       "Bash(git push --force*)",
       "Bash(git push -f*)",
       "Bash(git push * --force*)",

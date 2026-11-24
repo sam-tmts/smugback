@@ -84,6 +84,7 @@ a PR with passing CI, and is merged by the owner. If in doubt, it isn't trivial.
   `test_parses_album_page_with_no_images`). Anything that can't be automated goes in
   `docs/test-plan.md` as a manual check.
 - **Decisions:** a choice that later work must respect gets an ADR in `docs/adr/`.
+- **Future work:** refer to it by its GitHub issue, never by an unwritten CR number.
 - **Docs:** update `docs/architecture.md` and `docs/threat-model.md` in the same PR
   when a change affects them.
 - **Style:** small, readable functions; explain *why* in comments, not *what*.
@@ -94,10 +95,10 @@ Run from the project root (uv's cache path is relative: see ADR-0005).
 
 - Every check (tests, lint, format check): `make check`
 - Format: `uv run ruff format`
-- Run: `uv run smugback` (owner only, in their own terminal, when it reaches SmugMug)
+- Run during development: `uv run smugback`
 
 ## Project notes
 
 - **Read-only on SmugMug.** SmugBack never uploads, edits or deletes anything there.
-- **No SmugMug hosts in the sandbox.** Real runs happen in the owner's own terminal;
-  tests use recorded fixtures.
+- **No SmugMug hosts in the sandbox, and no Keychain.** Real runs happen in the
+  owner's own terminal; tests use fixtures, a fake `fetch` and an in-memory keyring.

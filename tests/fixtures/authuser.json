@@ -1,0 +1,16 @@
+{
+  "Response": {
+    "Uri": "/api/v2/user/demo",
+    "User": {
+      "NickName": "demo",
+      "Name": "Demo User",
+      "Uris": {
+        "UserAlbums": {
+          "Uri": "/api/v2/user/demo!albums"
+        }
+      }
+    }
+  },
+  "Code": 200,
+  "Message": "Ok"
+}
