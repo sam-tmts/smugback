@@ -1,0 +1,18 @@
+{
+  "Response": {
+    "Uri": "/api/v2/user/demo!albums",
+    "Album": [
+      {"Name": "Holiday 2024", "ImageCount": 12},
+      {"Name": "Empty Album", "ImageCount": 0}
+    ],
+    "Pages": {
+      "Total": 4,
+      "Start": 1,
+      "Count": 2,
+      "RequestedCount": 2,
+      "NextPage": "/api/v2/user/demo!albums?start=3&count=2"
+    }
+  },
+  "Code": 200,
+  "Message": "Ok"
+}
