@@ -9,6 +9,11 @@ heading and is tagged `vX.Y.Z`.
 
 ## [Unreleased]
 
+### Security
+
+- Shell commands Claude runs for SmugBack can no longer read your home folder outside
+  this project (CR-0005).
+
 ## [0.1.0] - 2026-11-24
 
 SmugBack's first release: sign in to SmugMug and list your albums.

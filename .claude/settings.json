@@ -9,12 +9,21 @@
     ],
     "filesystem": {
       "denyRead": [
+        "~/",
         "~/.ssh",
         "~/.aws",
         "~/.config/gh",
         "~/.git-credentials",
+        "~/.config/git/credentials",
         "~/.netrc",
         "~/Library/Keychains"
+      ],
+      "allowRead": [
+        ".",
+        "~/.local/bin/uv",
+        "~/.local/share/uv/python",
+        "~/.gitconfig",
+        "~/.config/git"
       ]
     },
     "network": {
@@ -35,6 +44,7 @@
       "Read(~/.aws/**)",
       "Read(~/.config/gh/**)",
       "Read(~/.git-credentials)",
+      "Read(~/.config/git/credentials)",
       "Read(~/.netrc)",
       "Read(~/Library/Keychains/**)",
       "Bash(git push --force*)",

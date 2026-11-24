@@ -5,7 +5,7 @@
 | Status     | Accepted                 |
 | Date       | 2026-11-22               |
 | Deciders   | Samuel Taylor (sam-tmts) |
-| Related CR | CR-0001                  |
+| Related CR | CR-0001; amended by CR-0005 |
 
 ## Context
 
@@ -18,9 +18,23 @@ dependency or through prompt injection.
 - Development happens in a dedicated developer account on the computer, with no access
   to personal data.
 - Claude Code runs there with its built-in sandbox on, in strict mode (set in
-  `.claude/settings.json`): shell commands can write only inside the project, can't
-  read the account's credential locations, can reach only allowlisted hosts, can't be
-  retried outside the sandbox, and Claude Code won't start if the sandbox can't.
+  `.claude/settings.json`): shell commands can write only inside the project, can
+  reach only allowlisted hosts, can't be retried outside the sandbox, and Claude Code
+  won't start if the sandbox can't.
+- **Reads in the home folder** are denied (`~/`), then allowed back only where a tool
+  fails without them, so work on one project can't see another (CR-0005). The
+  credential locations stay denied too, in case a parent folder is ever allowed back.
+
+  | Allowed back | Why |
+  |--------------|-----|
+  | `.` (the project) | The work itself |
+  | `~/.local/bin/uv` | The uv program, which `make check` runs |
+  | `~/.local/share/uv/python` | The Python uv installs, which `.venv/bin/python` links to |
+  | `~/.gitconfig` | git's settings; without it git stops ("unable to access") |
+  | `~/.config/git` | git's global ignore file; without it git warns on every command. Its `credentials` file stays denied |
+
+  Developers who install uv elsewhere add its path in
+  `.claude/settings.local.json`.
 - `git push` is the one command that runs outside the sandbox, because pushing needs
   the stored GitHub token and sandboxed commands can't reach it. Claude asks before
   every push.

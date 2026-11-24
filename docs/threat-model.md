@@ -30,7 +30,8 @@ Update it in the same pull request as any change that affects these.
 
 | Threat | Mitigations | Residual risk |
 |--------|-------------|---------------|
-| **Agent reaches personal data** | Dedicated developer account; sandbox | None while the account holds no personal data |
+| **Agent reaches personal data** | Dedicated developer account; sandbox denies reads of the home folder outside the project (ADR-0004) | None while the account holds no personal data |
+| **One project reaches another:** an agent working on SmugBack reads another project in the same account, by mistake or through prompt injection | Sandboxed commands can't read the home folder outside this project and a few tool paths (ADR-0004); Claude's file tools ask before reading outside the project (checked by M18) | Auto mode may approve a file-tool read without asking, and hooks and MCP servers aren't covered (see known limitations); folders outside the home folder, such as external drives under `/Volumes`, stay readable |
 | **Prompt injection:** an agent acts on instructions hidden in something it reads | Sandbox; `CLAUDE.md` rule to treat such text as data; owner review at every gate | An injected change could reach a pull request; owner review is the backstop |
 | **Credential theft** | Real secrets never enter the repository (ADR-0003); sandbox blocks reads of credential locations, and sandboxed commands can't reach the stored GitHub token (only `git push` runs outside the sandbox, with approval); permission rules block Claude's file tools from them | Credentials in the developer account outside those locations; keep tokens fine-grained and short-lived |
 | **Data sent out** | Sandbox network allowlist (GitHub and PyPI only; no SmugMug host, so real runs happen only in the owner's terminal); developers decline prompts to allow new hosts unless a CR covers them | Data could be sent to an allowed service, such as a GitHub gist |
@@ -47,7 +48,10 @@ Update it in the same pull request as any change that affects these.
 
 - The sandbox contains shell commands only. Claude's file tools, hooks and MCP servers
   run outside it, governed by permission rules, which are a guardrail rather than a
-  boundary. The developer account is what protects personal data from them.
+  boundary. The developer account is what protects personal data from them. Claude
+  Code's `blockReadsOutsideWorkingDirectories` setting would make the file tools
+  refuse reads outside the project, but it also discards the sandbox's allow list, so
+  shell commands can no longer read the project (found in CR-0005); it isn't used.
 - Developers can loosen the shared settings with personal overrides
   (`.claude/settings.local.json`). The project's policy relies on each developer not
   weakening it.

@@ -51,6 +51,9 @@ Checks that can't be automated. Each one names the acceptance criterion it verif
 | M14 | CR-0003 AC8 | In your everyday macOS account (not the developer account, and not through Claude), install SmugBack from the PR's commit as the README describes. Run `smugback login`, then `smugback albums`, and compare the list with your albums on the SmugMug website. Check that SmugMug lists SmugBack's access under Site Settings → API Keys. Run `smugback logout`, then search Keychain Access for "smugback". Finally `uv tool uninstall smugback`. | Login succeeds; every album appears with a plausible count; SmugBack is listed under Site Settings → API Keys; after logout, Keychain Access has no "smugback" item. |
 | M15 | CR-0003 AC9 | Read `docs/threat-model.md`, the README's "Using SmugBack" and `CLAUDE.md`'s Conventions. | The threat model covers the SmugMug credentials, the read-only key and revoking access, with no template note; the README gives the clean install and how to revoke access; `CLAUDE.md` has the future-work convention. |
 | M16 | CR-0003 AC11 | In your own terminal: `security add-generic-password -s smugback-probe -a probe -w dummy`. Ask Claude to run `security find-generic-password -s smugback-probe -w`. Then run the same command in your terminal. Delete the item afterwards with `security delete-generic-password -s smugback-probe`. | Claude's sandboxed command returns no secret; your terminal prints `dummy`. (Run during CR-0003's build: before the deny rule the sandbox printed `dummy`; after it, nothing.) |
+| M17 | CR-0005 AC1 | In your own terminal: `mkdir ~/Projects/sandbox-probe && echo dummy > ~/Projects/sandbox-probe/probe.txt`. Ask Claude to run `cat ~/Projects/sandbox-probe/probe.txt`, `ls ~/Projects/sandbox-probe` and `ls ~/Downloads`. Then run the `cat` in your terminal. Keep the folder for M18. | All three of Claude's commands fail with "Operation not permitted"; your terminal prints `dummy`. |
+| M18 | CR-0005 AC2 | With Claude Code in the default permission mode (not auto), ask Claude to read `~/Projects/sandbox-probe/probe.txt` with its Read tool, not a shell command. Decline if asked. Afterwards, in your terminal: `rm -r ~/Projects/sandbox-probe`. | Claude asks before reading, and nothing is read once you decline. If it reads without asking, record that in the threat model as a known limitation for the owner to accept. |
+| M19 | CR-0005 AC3 | In a Claude Code session, on a throwaway or CR branch, ask Claude to run `make check`, `uv run smugback --help` and `git status`, then commit a change. (`git push` runs outside the sandbox, so the read rules don't affect it.) | All work inside the sandbox with no "Operation not permitted" warnings. |
 
 CR-0000 AC3 (CI passes on the template) and AC4 (actions pinned, token read-only) are
 verified by the CI jobs on the CR-0000 pull request; AC4's job is
@@ -58,7 +61,8 @@ verified by the CI jobs on the CR-0000 pull request; AC4's job is
 criteria and documentation) are verified by CR-0001's review, closing pull request and
 release. CR-0002 AC1 and AC2 are verified by tests in `tests/test_cli.py`, and AC4 by
 the CI job `cr0002-ac4-check`. CR-0003 AC1–AC7 and AC10 are verified by tests in
-`tests/test_smugmug_cli.py`.
+`tests/test_smugmug_cli.py`. CR-0005 AC4 is verified by re-running M6 and M16 after
+CR-0005's change, and AC5 by CR-0005's review.
 
 ## Release criteria
 
