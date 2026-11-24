@@ -4,7 +4,7 @@ A command-line tool that backs up a SmugMug account's photos and videos to a fol
 your computer.
 
 > **Status:** early. The `smugback` command installs and runs, but can't back anything
-> up yet. Signing in to SmugMug and listing albums come next (CR-0003).
+> up yet. Signing in to SmugMug and listing albums come next.
 
 ## Scope
 
