@@ -2,7 +2,7 @@
 
 | Field         | Value                                                        |
 |---------------|--------------------------------------------------------------|
-| Status        | Approved                                                     |
+| Status        | Done                                                         |
 | Author        | Claude, for sam-tmts                                         |
 | Created       | 2026-11-24                                                   |
 | Semver impact | minor: first commands that talk to SmugMug                   |
@@ -84,39 +84,39 @@ ADR-0005 (Python toolchain).
 
 ## Acceptance criteria
 
-- [ ] AC1: `smugback login` takes the API key, secret and PIN, completes the OAuth
+- [x] AC1: `smugback login` takes the API key, secret and PIN, completes the OAuth
   exchange, and stores the credentials only in the credential store.
   *Verified by:* `test_cr0003_ac1_login_stores_credentials_in_keychain` (mocked
   OAuth and credential store).
-- [ ] AC2: `smugback albums` lists every album, with name and photo and video count,
+- [x] AC2: `smugback albums` lists every album, with name and photo and video count,
   across all pages of results.
   *Verified by:* `test_cr0003_ac2_lists_all_albums_across_pages`.
-- [ ] AC3: Without stored credentials, `smugback albums` exits non-zero and tells the
+- [x] AC3: Without stored credentials, `smugback albums` exits non-zero and tells the
   user to run `smugback login`, without contacting SmugMug.
   *Verified by:* `test_cr0003_ac3_albums_without_login_explains`.
-- [ ] AC4: After sign-in, SmugBack only reads from SmugMug: every API request is a GET.
+- [x] AC4: After sign-in, SmugBack only reads from SmugMug: every API request is a GET.
   *Verified by:* `test_cr0003_ac4_api_requests_are_read_only`.
-- [ ] AC5: The API secret and access token never appear in output or error messages,
+- [x] AC5: The API secret and access token never appear in output or error messages,
   including when a request fails.
   *Verified by:* `test_cr0003_ac5_secrets_not_in_output_or_errors`.
-- [ ] AC6: `smugback logout` removes every stored credential, and succeeds when
+- [x] AC6: `smugback logout` removes every stored credential, and succeeds when
   there is nothing to remove.
   *Verified by:* `test_cr0003_ac6_logout_removes_credentials`.
-- [ ] AC7: `smugback` with no arguments prints the help.
+- [x] AC7: `smugback` with no arguments prints the help.
   *Verified by:* `test_cr0003_ac7_no_arguments_prints_help`.
-- [ ] AC8: With a real account, in the owner's terminal, from a clean install: login
+- [x] AC8: With a real account, in the owner's terminal, from a clean install: login
   works, `albums` matches the albums on the SmugMug website, and after `logout` no
   SmugBack entry remains in Keychain Access.
   *Verified by:* manual check in `docs/test-plan.md`.
-- [ ] AC9: The threat model covers SmugBack's credentials, including the read-only
+- [x] AC9: The threat model covers SmugBack's credentials, including the read-only
   key and revoking access on SmugMug, with no template note left; the README documents
   the clean-install way to run SmugBack and how to revoke access; `CLAUDE.md` has the
   future-work convention.
   *Verified by:* manual check in `docs/test-plan.md`.
-- [ ] AC10: When no secure credential store is available, `smugback login` exits
+- [x] AC10: When no secure credential store is available, `smugback login` exits
   non-zero with a clear message and writes no credentials anywhere.
   *Verified by:* `test_cr0003_ac10_login_without_secure_store_stores_nothing`.
-- [ ] AC11: A sandboxed command can't read a Keychain item that the owner's own
+- [x] AC11: A sandboxed command can't read a Keychain item that the owner's own
   terminal can read.
   *Verified by:* manual check in `docs/test-plan.md`.
 
@@ -142,5 +142,5 @@ ADR-0005 (Python toolchain).
 | CR approved | 2026-11-24 | sam-tmts | Keychain only; headless use deferred |
 | CR amended | 2026-11-24 | sam-tmts | Keychain deny rule and AC11 added after planning found the sandbox can reach the login Keychain |
 | Plan approved | 2026-11-24 | sam-tmts | Plan in the PR description |
-| PR merged | | | |
-| Released | | | |
+| PR merged | 2026-11-24 | sam-tmts | PR #5. AC1–AC7 and AC10 by tests; AC8 by M14 (owner's everyday account, 1,388 albums); AC9 by M15; AC11 by M16, run during the build |
+| Released | 2026-11-24 | sam-tmts | v0.1.0, tagged on the merge of the release PR, with CR-0002 |

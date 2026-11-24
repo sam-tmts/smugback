@@ -2,7 +2,7 @@
 
 | Field         | Value                                                     |
 |---------------|-----------------------------------------------------------|
-| Status        | Approved                                                  |
+| Status        | Done                                                      |
 | Author        | Claude, for sam-tmts                                      |
 | Created       | 2026-11-23                                                |
 | Semver impact | minor: first installable package with a working command   |
@@ -74,4 +74,4 @@ in the owner's own terminal, never in the sandbox).
 | CR approved | 2026-11-23 | sam-tmts | |
 | Plan approved | 2026-11-24 | sam-tmts | Plan in the PR description |
 | PR merged | 2026-11-24 | sam-tmts | PR #1. AC1, AC2 by tests; AC3 by M10; AC4 by CI job `cr0002-ac4-check`; AC5–AC7 by M11–M13 |
-| Released | | | |
+| Released | 2026-11-24 | sam-tmts | v0.1.0, tagged on the merge of the release PR, with CR-0003 |
