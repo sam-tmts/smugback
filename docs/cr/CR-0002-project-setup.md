@@ -46,19 +46,19 @@ in the owner's own terminal, never in the sandbox).
 
 ## Acceptance criteria
 
-- [ ] AC1: `uv run smugback --version` prints the version from `pyproject.toml`.
+- [x] AC1: `uv run smugback --version` prints the version from `pyproject.toml`.
   *Verified by:* `test_cr0002_ac1_prints_version`.
-- [ ] AC2: `uv run smugback --help` lists usage and exits 0.
+- [x] AC2: `uv run smugback --help` lists usage and exits 0.
   *Verified by:* `test_cr0002_ac2_help_exits_cleanly`.
-- [ ] AC3: One command runs tests, lint and format check, and fails if any of
+- [x] AC3: One command runs tests, lint and format check, and fails if any of
   them fails. *Verified by:* manual check in `docs/test-plan.md`.
-- [ ] AC4: CI runs that command on every PR, and this PR passes it.
+- [x] AC4: CI runs that command on every PR, and this PR passes it.
   *Verified by:* the new CI job.
-- [ ] AC5: The sandbox allowlist adds only the package hosts uv needs, and no
+- [x] AC5: The sandbox allowlist adds only the package hosts uv needs, and no
   SmugMug host. *Verified by:* manual check of `.claude/settings.json`.
-- [ ] AC6: No template placeholders remain in `CLAUDE.md`, `README.md`,
+- [x] AC6: No template placeholders remain in `CLAUDE.md`, `README.md`,
   `CODEOWNERS`, `SECURITY.md` or `LICENSE`. *Verified by:* manual check.
-- [ ] AC7: Every new dependency is in `docs/dependencies.md`, and `uv.lock` is
+- [x] AC7: Every new dependency is in `docs/dependencies.md`, and `uv.lock` is
   committed. *Verified by:* manual check.
 
 ## Constraints and risks
@@ -73,5 +73,5 @@ in the owner's own terminal, never in the sandbox).
 |------|------|----|-------|
 | CR approved | 2026-11-23 | sam-tmts | |
 | Plan approved | 2026-11-24 | sam-tmts | Plan in the PR description |
-| PR merged | | | |
+| PR merged | 2026-11-24 | sam-tmts | PR #1. AC1, AC2 by tests; AC3 by M10; AC4 by CI job `cr0002-ac4-check`; AC5–AC7 by M11–M13 |
 | Released | | | |
