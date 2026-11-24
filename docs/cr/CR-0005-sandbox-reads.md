@@ -70,7 +70,7 @@ cache inside the project, which this keeps working).
 
 ## Acceptance criteria
 
-- [ ] AC1: A shell command Claude runs can't read or list a file in another folder of
+- [x] AC1: A shell command Claude runs can't read or list a file in another folder of
   the home directory, such as a sibling project or `~/Downloads`.
   *Verified by:* manual check in `docs/test-plan.md` (the owner creates a dummy file
   in another project folder in their own terminal; Claude's sandboxed `cat` and `ls`
@@ -79,10 +79,10 @@ cache inside the project, which this keeps working).
   owner's approval, or, if no simple rule achieves that, the threat model records it
   as a known limitation the owner has accepted.
   *Verified by:* manual check in `docs/test-plan.md`.
-- [ ] AC3: Day-to-day work still flows from inside the sandbox: `make check`, `uv run
+- [x] AC3: Day-to-day work still flows from inside the sandbox: `make check`, `uv run
   smugback --help`, `git status`, `git commit`, and a push through the normal approval.
   *Verified by:* manual check in `docs/test-plan.md` (re-running M9 and M10).
-- [ ] AC4: The credential reads blocked before this CR are still blocked.
+- [x] AC4: The credential reads blocked before this CR are still blocked.
   *Verified by:* re-running manual checks M6 and M16.
 - [ ] AC5: ADR-0004 lists every path allowed back, with the reason; the threat model
   covers one project reaching another; a GitHub issue tracks the template change.
