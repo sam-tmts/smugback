@@ -84,7 +84,7 @@ cache inside the project, which this keeps working).
   *Verified by:* manual check in `docs/test-plan.md` (re-running M9 and M10).
 - [x] AC4: The credential reads blocked before this CR are still blocked.
   *Verified by:* re-running manual checks M6 and M16.
-- [ ] AC5: ADR-0004 lists every path allowed back, with the reason; the threat model
+- [x] AC5: ADR-0004 lists every path allowed back, with the reason; the threat model
   covers one project reaching another; a GitHub issue tracks the template change.
   *Verified by:* the reviewer's documentation check.
 
