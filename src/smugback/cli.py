@@ -44,11 +44,14 @@ def albums(args: argparse.Namespace) -> int:
         print("Not signed in. Run `smugback login` first.", file=sys.stderr)
         return 1
     for album in SmugMug(stored).albums():
-        print(f"{album['Name']} ({item_count(album.get('ImageCount', 0))})")
+        print(f"{album['Name']} ({item_count(album.get('ImageCount'))})")
     return 0
 
 
-def item_count(count: int) -> str:
+def item_count(count: int | None) -> str:
+    # "?" rather than 0, so a missing count can't look like an empty album
+    if count is None:
+        return "? items"
     return f"{count} item" if count == 1 else f"{count} items"
 
 
@@ -88,6 +91,12 @@ def main(argv: list[str] | None = None) -> int:
     except (SmugMugError, InsecureStoreError) as error:
         print(f"smugback: {error}", file=sys.stderr)
     except KeyringError:
-        # The Keychain refused (for example, access was denied at its prompt)
-        print("smugback: the Keychain refused the request.", file=sys.stderr)
+        print(
+            "smugback: the Keychain refused the request. If macOS asks whether to "
+            "allow access, choose Allow.",
+            file=sys.stderr,
+        )
+    except (KeyboardInterrupt, EOFError):
+        print("\nsmugback: cancelled.", file=sys.stderr)
+        return 130
     return 1

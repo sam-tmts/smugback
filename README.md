@@ -22,8 +22,11 @@ read-only key is enough: SmugBack only reads).
 1. **Install** a reviewed version, outside any working copy of the code:
 
    ```sh
-   uv tool install git+https://github.com/sam-tmts/smugback@<tag or commit>
+   uv tool install --exclude-newer <YYYY-MM-DD> git+https://github.com/sam-tmts/smugback@<tag or commit>
    ```
+
+   Use the date the tag or commit was reviewed: `uv tool install` doesn't use the
+   project's lockfile, and this stops it picking up packages released since.
 
    Don't run SmugBack with real credentials from a development checkout: coding agents
    can write to its `.venv/` (see the [threat model](docs/threat-model.md)).

@@ -15,8 +15,9 @@ development, build or CI tool. The toolchain choice is ADR-0005.
 - **Purpose:** reads and writes SmugBack's credentials in the OS credential store
   (ADR-0003).
 - **Pinned in:** `uv.lock`, with its own dependencies on macOS: `jaraco.classes`,
-  `jaraco.context`, `jaraco.functools` and `more-itertools` (and, on other platforms
-  only, `SecretStorage`, `jeepney` or `pywin32-ctypes`).
+  `jaraco.context`, `jaraco.functools` and `more-itertools`. On Linux only (including
+  CI), `SecretStorage` and `jeepney`, with `cryptography`, `cffi` and `pycparser`; on
+  Windows only, `pywin32-ctypes`.
 - **Alternatives:** calling macOS's `security` command directly (macOS only, and
   secrets on command lines).
 - **Licence:** MIT. **Health:** the standard Python credential-store library, from the

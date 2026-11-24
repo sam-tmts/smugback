@@ -58,5 +58,8 @@ def load() -> Credentials | None:
 
 
 def delete() -> None:
+    # Check first rather than catching PasswordDeleteError: the macOS backend
+    # raises that for every failure, including access denied, which mustn't be
+    # mistaken for "nothing to delete"
     if keyring.get_password(SERVICE, ITEM) is not None:
         keyring.delete_password(SERVICE, ITEM)

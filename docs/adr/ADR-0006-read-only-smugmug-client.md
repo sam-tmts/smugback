@@ -23,8 +23,9 @@ URLs, logs and messages, and should add as few dependencies as possible (ADR-000
   included) and `Permissions=Read`. The token requests are the only POSTs.
 - **After sign-in, the client offers only `get`.** Every later feature, including
   downloading, reads through it; nothing may add a method that writes to SmugMug.
-- **The client only follows paths on `api.smugmug.com`**, so the signed header can't
-  be sent to another host.
+- **The signed header goes only to `api.smugmug.com`:** the client follows only paths
+  on that host, and refuses HTTP redirects (urllib would otherwise copy the header to
+  the redirect's host; an OAuth 1.0a signature doesn't survive a redirect anyway).
 
 ## Consequences
 

@@ -95,8 +95,7 @@ Run from the project root (uv's cache path is relative: see ADR-0005).
 
 - Every check (tests, lint, format check): `make check`
 - Format: `uv run ruff format`
-- Run during development: `uv run smugback` (it can't reach SmugMug or the Keychain
-  from the sandbox). Real runs: the owner only, from a clean install (see the README).
+- Run during development: `uv run smugback`
 
 ## Project notes
 
