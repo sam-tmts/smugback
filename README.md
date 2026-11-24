@@ -49,7 +49,8 @@ SmugBack is built with coding agents, and every change follows a change request.
    before every push ([details](docs/adr/ADR-0004-sandboxed-development.md)).
 3. **Install git** (on macOS: `xcode-select --install`), and create a
    [fine-grained personal access token](https://github.com/settings/personal-access-tokens)
-   limited to this repository, with a short expiry and only Contents (read and write).
+   limited to this repository, with a short expiry and only Contents and Workflows
+   (read and write; GitHub needs Workflows for any push that changes CI).
    Push once from an ordinary terminal and paste the token when asked for a password;
    git stores it for later pushes, including Claude's.
 4. **Install [uv](https://docs.astral.sh/uv/getting-started/installation/)**.
